@@ -29,6 +29,7 @@ namespace Benchmark
 
             listClass = System.Text.Json.JsonSerializer.Serialize(_objs);
 
+            //Utilizo isso por que as structs readonly não es´tão deserializando de forma facil com o .net core 3.1
             serializerOptions = new JsonSerializerOptions();
             serializerOptions.Converters.Add(new ImmutableConverter());
             serializerOptions.Converters.Add(new ListConverter<SecurityReadOnlyStruct>());
@@ -200,6 +201,9 @@ namespace Benchmark
             consumer.Consume(json);
         }
 
+        /// <summary>
+        /// Se mostrou mais performatico para converter uma string json para um objeto
+        /// </summary>
         [Benchmark]
         public void Deserialize_String_Span_To_Objetct_Class()
         {
@@ -210,6 +214,9 @@ namespace Benchmark
             consumer.Consume(jsonUtf8Bytes);
         }
 
+        /// <summary>
+        /// Se mostrou mais performatico para converter uma string json para um objeto
+        /// </summary>
         [Benchmark]
         public void Deserialize_String_Span_Objetct_Struct()
         {
@@ -220,6 +227,9 @@ namespace Benchmark
             consumer.Consume(jsonUtf8Bytes);
         }
 
+        /// <summary>
+        /// Consumiu muita memoria devido aos converters
+        /// </summary>
         [Benchmark]
         public void Deserialize_String_Span_To_Objetct_Struct_ReadOnly()
         {

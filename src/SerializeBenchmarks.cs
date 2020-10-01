@@ -113,86 +113,56 @@ namespace Benchmark
         [GlobalCleanup]
         public void IterationCleanup()
         {
-           
+
         }
 
         #region Default
         [Benchmark]
-        public string Serialize_Struct()
-        {
-            var json = System.Text.Json.JsonSerializer.Serialize(listStruct);
-            return json;
-        }
+        public string Serialize_Struct() => System.Text.Json.JsonSerializer.Serialize(listStruct);
 
         [Benchmark]
-        public string Serialize_Class()
-        {
-            var json = System.Text.Json.JsonSerializer.Serialize(listClass);
-            return json;
-        }
+        public string Serialize_Class() => System.Text.Json.JsonSerializer.Serialize(listClass);
 
         [Benchmark]
-        public string Newton_Serialize_Struct()
-        {
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(listStruct);
-            return json;
-        }
+        public string Newton_Serialize_Struct() => Newtonsoft.Json.JsonConvert.SerializeObject(listStruct);
 
         [Benchmark]
-        public string Newton_Serialize_Class()
-        {
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(listClass);
-            return json;
-        }
+        public string Newton_Serialize_Class() => Newtonsoft.Json.JsonConvert.SerializeObject(listClass);
 
         [Benchmark]
-        public string Serialize_Struct_ReadOnly()
-        {
-            var json = System.Text.Json.JsonSerializer.Serialize(listReadOnlyStruct);
-            return json;
-        }
+        public string Serialize_Struct_ReadOnly() => System.Text.Json.JsonSerializer.Serialize(listReadOnlyStruct);
 
         [Benchmark]
-        public string Newton_Serialize_Struct_ReadOnly()
-        {
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(listReadOnlyStruct);
-            return json;
-        }
+        public string Newton_Serialize_Struct_ReadOnly() => Newtonsoft.Json.JsonConvert.SerializeObject(listReadOnlyStruct);
 
         [Benchmark]
         public async ValueTask<string> Serialize_Objetct_Class_To_String_Byte()
         {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                await System.Text.Json.JsonSerializer.SerializeAsync(ms, listClass);
-                ms.Position = 0;
-                using var reader = new StreamReader(ms);
-                return await reader.ReadToEndAsync();
-            }
+            using MemoryStream ms = new MemoryStream();
+            await System.Text.Json.JsonSerializer.SerializeAsync(ms, listClass);
+            ms.Position = 0;
+            using var reader = new StreamReader(ms);
+            return await reader.ReadToEndAsync();
         }
 
         [Benchmark]
         public async ValueTask<string> Serialize_Objetct_Struct_To_String_Byte()
         {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                await System.Text.Json.JsonSerializer.SerializeAsync(ms, listStruct);
-                ms.Position = 0;
-                using var reader = new StreamReader(ms);
-                return await reader.ReadToEndAsync();
-            }
+            using MemoryStream ms = new MemoryStream();
+            await System.Text.Json.JsonSerializer.SerializeAsync(ms, listStruct);
+            ms.Position = 0;
+            using var reader = new StreamReader(ms);
+            return await reader.ReadToEndAsync();
         }
 
         [Benchmark]
         public async ValueTask<string> Serialize_Objetct_Struct_ReadOnly_To_String_Byte()
         {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                await System.Text.Json.JsonSerializer.SerializeAsync(ms, listReadOnlyStruct);
-                ms.Position = 0;
-                using var reader = new StreamReader(ms);
-                return await reader.ReadToEndAsync();
-            }
+            using MemoryStream ms = new MemoryStream();
+            await System.Text.Json.JsonSerializer.SerializeAsync(ms, listReadOnlyStruct);
+            ms.Position = 0;
+            using var reader = new StreamReader(ms);
+            return await reader.ReadToEndAsync();
         }
 
         [Benchmark]
@@ -221,5 +191,5 @@ namespace Benchmark
         #endregion
     }
 
-    
+
 }
